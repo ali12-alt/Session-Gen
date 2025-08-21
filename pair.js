@@ -66,17 +66,17 @@ router.get('/', async (req, res) => {
                             `▸ *Never share* your session ID\n` +
                             `▸ Join our WhatsApp Channel\n` +
                             `▸ Report bugs on GitHub\n\n` +
-                            `_Powered by ARSLAN-MD\n\n` +
+                            `_Powered by ASAD-MD\n\n` +
                             `🔗 *Useful Links:*\n` +
-                            `▸ GitHub: https://github.com/Arslan-MD/Arslan_MD\n` +
-                            `▸ https://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306`,
+                            `▸ GitHub: https://github.com/Asad-MD/Asad_MD\n` +
+                            `▸  https://whatsapp.com/channel/0029VbB2cc890x2vgOjM1o3d `,
                         contextInfo: {
                             mentionedJid: [sock.user.id],
                             forwardingScore: 1000,
                             isForwarded: true,
                             forwardedNewsletterMessageInfo: {
-                                newsletterJid: "120363348739987203@newsletter",
-                                newsletterName: "ARSLAN-MD",
+                                newsletterJid: "120363403251823712@newsletter",
+                                newsletterName: "ASAD-MD",
                                 serverMessageId: 143
                             }
                         }
