@@ -2,85 +2,203 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ASAD-MD Pair</title>
+  <title>ASAD-MD Pairing Ultra Pro Max</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* 🌌 Background Gradient */
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
+      background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
       color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 40px 20px;
+      min-height: 100vh;
+      justify-content: center;
     }
+
+    /* ✨ Heading */
     h1 {
-      color: #00ff88;
-      font-size: 28px;
-      margin-bottom: 20px;
+      color: #00ffcc;
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-shadow: 0 0 25px #00ffcc, 0 0 40px #00ffaa;
+      animation: float 3s ease-in-out infinite;
     }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* 🎨 Inputs & Buttons */
     input, button {
-      padding: 12px;
+      padding: 14px;
       font-size: 16px;
-      border-radius: 8px;
+      border-radius: 12px;
       border: none;
       margin: 10px 0;
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
+      outline: none;
+      transition: all 0.3s ease;
     }
+
     input {
-      background: #222;
+      background: rgba(255, 255, 255, 0.08);
       color: #fff;
-      border: 1px solid #444;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
     }
+
+    input:focus {
+      border-color: #00ffcc;
+      box-shadow: 0 0 12px #00ffcc;
+    }
+
     button {
-      background-color: #00ff88;
+      background: linear-gradient(45deg, #00ffcc, #00ffaa);
       color: #000;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s ease;
+      box-shadow: 0 5px 20px rgba(0,255,170,0.3);
     }
+
     button:hover {
-      background-color: #00cc6e;
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0,255,170,0.5);
     }
+
+    /* 📦 Output Box */
     .output {
-      margin-top: 30px;
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 10px;
+      margin-top: 25px;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 25px;
+      border-radius: 14px;
       max-width: 500px;
-      word-break: break-all;
-      border: 1px solid #333;
+      width: 100%;
+      word-break: break-word;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(12px);
+      display: none;
+      position: relative;
+      animation: fadeIn 0.5s ease forwards;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 📋 Copy button inside output */
+    .copy-btn {
+      margin-top: 15px;
+      background: #00ffcc;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      color: #000;
+      transition: 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: #00ffaa;
+    }
+
+    /* ⏳ Loader */
+    .loader {
+      border: 4px solid rgba(255,255,255,0.1);
+      border-left-color: #00ffcc;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* 📱 QR Code */
+    #qrcode {
+      margin-top: 20px;
+    }
+
+    /* 👑 Footer */
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #aaa;
+      text-align: center;
+    }
+    footer span {
+      color: #00ffcc;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <h1>ASAD-MD Pairing</h1>
+  <h1>⚡ ASAD-MD Pairing ⚡</h1>
 
   <input type="text" id="number" placeholder="Enter WhatsApp Number (e.g., 923123456789)" />
-  <button onclick="getCode()">Generate Pair Code</button>
+  <button onclick="getCode()">🚀 Generate Pair Code</button>
 
-  <div id="result" class="output" style="display:none;"></div>
+  <div id="result" class="output"></div>
+  <div id="qrcode"></div>
+
+  <footer>
+    Made with ❤️ by <span>Asad Mehmood</span>
+  </footer>
+
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
   <script>
     async function getCode() {
       const number = document.getElementById("number").value.trim();
       const resultBox = document.getElementById("result");
+      const qrBox = document.getElementById("qrcode");
+      qrBox.innerHTML = "";
+      resultBox.style.display = "block";
 
       if (!number) {
-        alert("Please enter a valid number.");
+        resultBox.innerHTML = "❌ Please enter a valid number.";
         return;
       }
 
-      resultBox.style.display = 'block';
-      resultBox.textContent = "⏳ Generating code, please wait...";
+      // Show loader
+      resultBox.innerHTML = '<div class="loader"></div> Generating code, please wait...';
 
       try {
         const res = await fetch(`/code?number=${encodeURIComponent(number)}`);
         const data = await res.json();
 
         if (data.code) {
-          resultBox.textContent = `✅ Pairing Code: ${data.code}`;
+          resultBox.innerHTML = `
+            ✅ Pairing Code: <b>${data.code}</b><br>
+            <button class="copy-btn" onclick="copyCode('${data.code}')">📋 Copy Code</button>
+          `;
+
+          // Generate QR code
+          new QRCode(qrBox, {
+            text: data.code,
+            width: 150,
+            height: 150,
+            colorDark: "#00ffcc",
+            colorLight: "#121212"
+          });
+
         } else if (data.error) {
           resultBox.textContent = `❌ Error: ${data.error}`;
         } else {
@@ -89,6 +207,12 @@
       } catch (err) {
         resultBox.textContent = `❌ Failed to get code: ${err.message}`;
       }
+    }
+
+    function copyCode(code) {
+      navigator.clipboard.writeText(code).then(() => {
+        alert("✅ Code copied to clipboard!");
+      });
     }
   </script>
 
